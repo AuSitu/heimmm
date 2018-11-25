@@ -52,10 +52,10 @@
                                         <dd>
                                             <div id="buyButton" class="btn-buy">
                                                 <!-- <router-link to="/shopcar">立即购买</router-link> -->
-                                                <!-- <button onclick="cartAdd(this,'/',1,'/shopping.html');" class="buy"><router-link to="/shopcar">立即购买</router-link></button> -->
-                                                <!-- <button onclick="cartAdd(this,'/',0,'/cart.html');"  class="add"><router-link  @click.prevent="doThis" to="/shopcar">加入购物车</router-link></button> -->
-                                                  <button  class="buy"><router-link :to="`/shopcar/`+goodsinfo.id">立即购买</router-link></button>
-                                                <button   class="add"><router-link  @click.prevent="doThis" to="/shopcar">加入购物车</router-link></button>
+                                                <button  class="buy">立即购买</button>
+                                                <button @click="addCart"  class="add">加入购物车</button>
+                                                  <!-- <button  class="buy"><router-link :to="`/shopcar/`+goodsinfo.id">立即购买</router-link></button> -->
+                                                <!-- <button   class="add"><router-link  @click.prevent="doThis" to="/shopcar">加入购物车</router-link></button> -->
                                             </div>
                                         </dd>
                                     </dl>
@@ -113,7 +113,7 @@
                                         </li>
                                     </ul>
                                     <div class="page-box" style="margin: 5px 0px 0px 62px;">
-                                         <Page @on-page-size-change="paszChange" @on-change="pageChange" :page-size-opts="[8,16,24]" :page-size="pageSize" placement="top" :total="totalcount"show-sizer  show-elevator  />
+                                         <Page :current="pageIndex" @on-page-size-change="paszChange" @on-change="pageChange" :page-size-opts="[8,16,24]" :page-size="pageSize" placement="top" :total="totalcount"show-sizer  show-elevator  />
                                     </div>
                                 </div>
                             </div>
@@ -223,18 +223,18 @@ export default {
           .post(`site/validate/comment/post/goods/${this.artID}`, {
             commenttxt: this.commentTxt
           })
-          .then(response=> {
+          .then(response => {
             //   console.log(response);
-              
+
             if (response.data.status == 0) {
               this.$Message.success(response.data.message);
 
               this.commentTxt = "";
-              this.pageIndex =1;
+              this.pageIndex = 1;
               //调取评论方法
               this.getComments();
             } else {
-            //   this.$Message.error("没有发表成功");
+              //   this.$Message.error("没有发表成功");
             }
           });
       }
@@ -266,6 +266,16 @@ export default {
       this.pageSize = pasz;
       //调取评论方法
       this.getComments();
+    },
+    //把商品加到购物车上去
+    addCart() {
+      // console.log(this.artID);
+      // console.log(this.buyCount);
+      //提交到载荷
+      this.$store.commit("addTOCart", {
+        goodId: this.artID,
+        goodNum: this.buyCount
+      });
     }
   },
   created() {

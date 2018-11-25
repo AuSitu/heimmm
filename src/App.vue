@@ -25,7 +25,8 @@
                     <a href="" class="">
                         <i class="iconfont icon-cart"></i>购物车(
                         <span id="shoppingCartCount">
-                            <span>4</span>
+                            <!-- <span>{{$store.state.count}}</span> -->
+                            <span>{{$store.getters.totalCount}}</span>
                         </span>)</a>
                 </div>
             </div>
