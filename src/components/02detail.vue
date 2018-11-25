@@ -13,7 +13,12 @@
                 <div class="wrap-box">
                     <div class="left-925">
                         <div class="goods-box clearfix">
-                            <div class="pic-box"></div>
+                            <div class="pic-box">
+                                <ProductZoomer v-if="images.normal_size.length!=0"
+                                    :base-images="images"
+                                    :base-zoomer-options="zoomerOptions"
+                                />
+                            </div>
                             <div class="goods-spec">
                                 <h1>{{goodsinfo.title}}</h1>
                                 <p class="subtitle">{{goodsinfo.sub_title}}</p>
@@ -180,7 +185,25 @@ export default {
       // 总评论数
       totalcount: 0,
       // 评论内容
-      commentTxt: ""
+      commentTxt: "",
+      //放大镜数据
+      images: {
+        // required
+        normal_size: [
+          //   { id: "unique id", url: "image url" },
+          //   { id: "unique id", url: "image url" }
+        ]
+      },
+      //放大镜设置
+      zoomerOptions: {
+        zoomFactor: 3,
+        pane: "pane",
+        hoverDelay: 300,
+        namespace: "zoomer",
+        move_by_click: false,
+        scroll_items: 7,
+        choosed_thumb_border_color: "#dd2c00"
+      }
     };
   },
   methods: {
@@ -207,6 +230,15 @@ export default {
           this.hotgoodslist = result.data.message.hotgoodslist;
           //   图片列表
           this.imglist = result.data.message.imglist;
+          // 设置放大镜的数据即可
+          this.imglist.normal_size = [];
+          // 把数据添加到数组中
+          this.imglist.forEach(val => {
+            this.images.normal_size.push({
+              id: val.id,
+              url: val.original_path
+            });
+          });
         });
       //调取评论方法
       this.getComments();
@@ -287,6 +319,8 @@ export default {
       // $route(newVal, oldVal) {
       // console.log(newVal+'---'+oldVal);
       //   console.log("数据变了");
+      // 设置 图片数组为空 让放大镜组件 重新生成
+      this.images.normal_size = [];
 
       this.initData();
     }
@@ -302,5 +336,18 @@ export default {
 .ivu-back-top span {
   font-size: 80px;
   color: purple;
+}
+.preview-box img {
+  width: 375px;
+}
+.thumb-list img {
+  width: 100px;
+  height: 100px;
+}
+#zoomer-pane-container {
+  left: 420px !important;
+  top: 10px !important;
+  width: 501px !important;
+  height: 400px !important;
 }
 </style>

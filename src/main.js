@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import App from './App.vue'
 
+// 放大镜组件
+import ProductZoomer from 'vue-product-zoomer'
+Vue.use(ProductZoomer)
+
 // 引入ElementUI 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
