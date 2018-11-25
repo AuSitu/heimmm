@@ -150,7 +150,7 @@
                                 </div>
                                 <div class="txt-box">
                                     <a href="/goods/show-98.html">{{item.title}}</a>
-                                    <span>{{item.add_time | shortTime}}</span>
+                                    <span>{{item.add_time | shortTime()}}</span>
                                 </div>
                             </li>
 

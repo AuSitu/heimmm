@@ -184,7 +184,6 @@ export default {
     };
   },
   methods: {
-     
     //初始化数据
     initData() {
       this.buyCount = 1;
@@ -214,33 +213,31 @@ export default {
     },
     // 提交评论内容
     txtSub() {
-
-    //   console.log(this.commentTxt);
+      //   console.log(this.commentTxt);
 
       if (this.commentTxt == "") {
-        // alert("请输入您的评论");
-        return;
-      }
-      // 发送评论请求
-      this.$axios
-        .post(
-          `http://111.230.232.110:8899/site/validate/comment/post/goods/${
-            this.artID
-          }`,
-          {
+        this.$Message.warning("请输入评论,不能为空");
+      } else {
+        // 发送评论请求
+        this.$axios
+          .post(`site/validate/comment/post/goods/${this.artID}`, {
             commenttxt: this.commentTxt
-          }
-        )
-        .then(function(response) {
-          console.log(response);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+          })
+          .then(response=> {
+            //   console.log(response);
+              
+            if (response.data.status == 0) {
+              this.$Message.success(response.data.message);
 
-      this.commentTxt = "";
-      //调取评论方法
-      this.getComments();
+              this.commentTxt = "";
+              this.pageIndex =1;
+              //调取评论方法
+              this.getComments();
+            } else {
+            //   this.$Message.error("没有发表成功");
+            }
+          });
+      }
     },
     //获取评论
     getComments() {
@@ -273,10 +270,14 @@ export default {
   },
   created() {
     this.initData();
-    this.txtSub();
+    // this.txtSub();
   },
   watch: {
-    $route(newVal, oldVal) {
+    "$route.path"(newVal, oldVal) {
+      // $route(newVal, oldVal) {
+      // console.log(newVal+'---'+oldVal);
+      //   console.log("数据变了");
+
       this.initData();
     }
   }

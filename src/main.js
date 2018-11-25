@@ -17,6 +17,9 @@ import axios from 'axios'
 // 一般来说 设置到原型上的 属性 Vue中 会使用$作为前缀 用来区分普通的属性
 Vue.prototype.$axios = axios;
 
+//绑定全局的axios地址
+axios.defaults.baseURL = 'http://111.230.232.110:8899/';
+
 
 // 下载 VueRouter 
 import VueRouter from 'vue-router'
@@ -56,8 +59,8 @@ let router = new VueRouter({
 // 导入 moment.js
 import moment from "moment";
 //全局过滤器
-Vue.filter('shortTime',value=>{
-  return moment(value).format("YYYY-MM-DD HH:mm:ss ");
+Vue.filter('shortTime',(value)=>{
+  return moment(value).format("YYYY-MM-DD HH:mm:ss");
 
 })
 
