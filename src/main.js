@@ -26,7 +26,7 @@ const store = new Vuex.Store({
   mutations: {
     addTOCart(state, obj) {
       // console.log('触发了');
-      console.log(state);
+      // console.log(state);
       // console.log(obj);
       // console.log( state.cartData[obj.goodId]  );
       if (state.cartData[obj.goodId] != undefined) {
@@ -100,7 +100,7 @@ let routes = [{
   path: '/detail/:artID', // 使用动态路由匹配 传递参数 通过 /`+it1.artID
   component: detail
 }, {
-  path: '/shopcar/:needId',
+  path: '/shopcar',
   component: shopcar
 }]
 

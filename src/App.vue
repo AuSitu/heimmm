@@ -22,12 +22,13 @@
                         <a>退出</a>
                         <strong>|</strong>
                     </span>
-                    <a href="" class="">
-                        <i class="iconfont icon-cart"></i>购物车(
-                        <span id="shoppingCartCount">
-                            <!-- <span>{{$store.state.count}}</span> -->
-                            <span>{{$store.getters.totalCount}}</span>
-                        </span>)</a>
+                        <router-link to="/shopcar">
+                            <i class="iconfont icon-cart"></i>购物车(
+                            <span id="shoppingCartCount">
+                                <!-- <span>{{$store.state.count}}</span> -->
+                                <span>{{$store.getters.totalCount}}</span>
+                            </span>)
+                        </router-link>
                 </div>
             </div>
         </div>
@@ -121,8 +122,7 @@
 <script>
 export default {
   name: "app",
-  components: {
-  }
+  components: {}
 };
 </script>
 
