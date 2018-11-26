@@ -308,6 +308,13 @@ export default {
         goodId: this.artID,
         goodNum: this.buyCount
       });
+      //弹出加入成功
+       this.$notify({
+          title: 'success',
+          message: '商品加入成功',
+          type: 'success',
+          duration: 800
+        });
     }
   },
   created() {
@@ -324,7 +331,8 @@ export default {
 
       this.initData();
     }
-  }
+  },
+  
 };
 </script>
 

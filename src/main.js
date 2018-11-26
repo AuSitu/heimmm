@@ -24,7 +24,7 @@ const store = new Vuex.Store({
     // 购物车ID → 数量
     //读取本地存储的数据
     cartData: JSON.parse(window.localStorage.getItem('ShoppingCartData'))||{
-      90: 12,
+      // 90: 12,
     }
   },
   mutations: {
@@ -51,6 +51,12 @@ const store = new Vuex.Store({
         Vue.set( state.cartData, obj.goodId, obj.goodNum )
       }
       // console.log(state);
+    },
+    // 购物车数据改变右上角变化
+    updateCarData(state,obj){
+      // console.log(obj);
+      state.cartData = obj
+      
     }
   },
   getters: {
