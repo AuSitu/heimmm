@@ -23,7 +23,7 @@ const store = new Vuex.Store({
   state: {
     // 购物车ID → 数量
     //读取本地存储的数据
-    cartData: JSON.parse(window.localStorage.getItem('ShoppingCartData'))||{
+    cartData: JSON.parse(window.localStorage.getItem('ShoppingCartData')) || {
       // 90: 12,
     }
   },
@@ -48,15 +48,15 @@ const store = new Vuex.Store({
         // 它必须用于向响应式对象上添加新属性，因为 Vue 无法探测普通的新增属性 
         // 使用Vue.set才可以跟踪数据改变
         // 参数1 对象 参数2 添加的属性名 参数3 属性的值
-        Vue.set( state.cartData, obj.goodId, obj.goodNum )
+        Vue.set(state.cartData, obj.goodId, obj.goodNum)
       }
       // console.log(state);
     },
     // 购物车数据改变右上角变化
-    updateCarData(state,obj){
+    updateCarData(state, obj) {
       // console.log(obj);
       state.cartData = obj
-      
+
     }
   },
   getters: {
@@ -70,8 +70,8 @@ const store = new Vuex.Store({
   }
 });
 //浏览器关闭保存数据
-window.onbeforeunload = function(){
-  window.localStorage.setItem('ShoppingCartData',JSON.stringify(store.state.cartData))
+window.onbeforeunload = function () {
+  window.localStorage.setItem('ShoppingCartData', JSON.stringify(store.state.cartData))
 }
 
 
@@ -94,6 +94,8 @@ import './assets/site/css/style.css'
 import index from './components/index.vue'
 import detail from './components/02detail.vue'
 import shopcar from './components/03shopcar.vue'
+import order from './components/04order.vue'
+import login from './components/05login.vue'
 
 
 Vue.config.productionTip = false
@@ -112,6 +114,12 @@ let routes = [{
 }, {
   path: '/shopcar',
   component: shopcar
+}, {
+  path: '/order',
+  component: order
+},{
+  path: '/login',
+  component: login
 }]
 
 
@@ -119,7 +127,26 @@ let routes = [{
 let router = new VueRouter({
   routes
 })
+// 导航守卫
+router.beforeEach((to, from, next) => {
 
+
+  if (to.path == '/order') {
+    axios.get("site/account/islogin").then(result => {
+      // console.log(result);
+      if (result.data.code == 'nologin') {
+        Vue.prototype.$Message.warning("请先登录");
+
+        router.push('/login')
+      }
+    })
+
+  } else {
+    next()
+
+  }
+
+})
 // 导入 moment.js
 import moment from "moment";
 //全局过滤器

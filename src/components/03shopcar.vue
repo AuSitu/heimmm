@@ -105,7 +105,9 @@
                     <div class="cart-foot clearfix">
                         <div class="right-box">
                             <button class="button" onclick="javascript:location.href='/index.html';">继续购物</button>
-                            <button class="submit" onclick="formSubmit(this, '/', '/shopping.html');">立即结算</button>
+                            <router-link to="/order">
+                                <button class="submit" >立即结算</button>
+                            </router-link>
                         </div>
                     </div>
                     <!--购物车底部-->
@@ -134,14 +136,14 @@ export default {
         center: true
       })
         .then(() => {
-            //删除goodsList的数据 同事watch也会同步监听到
-            this.goodsList.forEach((v,index)=>{
-                // console.log(v);
-                // console.log(index);
-                if(v.id == id){
-                    this.goodsList.splice(index,1)                 
-                }
-            })
+          //删除goodsList的数据 同事watch也会同步监听到
+          this.goodsList.forEach((v, index) => {
+            // console.log(v);
+            // console.log(index);
+            if (v.id == id) {
+              this.goodsList.splice(index, 1);
+            }
+          });
           this.$message({
             type: "success",
             message: "删除成功!"
@@ -178,7 +180,7 @@ export default {
           val.buycount = this.$store.state.cartData[val.id];
           val.isSelected = true;
         });
-        console.log(result);
+        // console.log(result);
         this.goodsList = result.data.message;
       });
   },
