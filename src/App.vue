@@ -10,16 +10,16 @@
                     <a target="_blank" href="#"></a>
                 </div>
                 <div id="menu" class="right-box">
-                    <span style="display: none;">
-                        <a href="" class="">登录</a>
+                    <span style="display: none;" v-show="$store.state.isLogin==false">
+                        <router-link to="/login">登录</router-link>
                         <strong>|</strong>
                         <a href="" class="">注册</a>
                         <strong>|</strong>
                     </span>
-                    <span>
+                    <span v-show="$store.state.isLogin==true">
                         <a href="" class="">会员中心</a>
                         <strong>|</strong>
-                        <a>退出</a>
+                        <a @click="logout">退出</a>
                         <strong>|</strong>
                     </span>
                         <router-link to="/shopcar">
@@ -122,7 +122,21 @@
 <script>
 export default {
   name: "app",
-  components: {}
+  components: {},
+  methods:{
+      logout(){
+          this.$axios.get(`site/account/logout`).then(res=>{
+            //   console.log(res);
+            if(res.data.status === 0){
+                this.$Message.success(res.data.message);
+                this.$router.push('/index');
+                //修改vuex的登录的字段
+                this.$store.commit('changeLog',false)
+            }
+              
+          })
+      }
+  }
 };
 </script>
 

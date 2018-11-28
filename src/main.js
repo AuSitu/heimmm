@@ -25,7 +25,9 @@ const store = new Vuex.Store({
     //读取本地存储的数据
     cartData: JSON.parse(window.localStorage.getItem('ShoppingCartData')) || {
       // 90: 12,
-    }
+    },
+    // 存储是否登录
+    isLogin :false
   },
   mutations: {
     addTOCart(state, obj) {
@@ -57,6 +59,10 @@ const store = new Vuex.Store({
       // console.log(obj);
       state.cartData = obj
 
+    },
+    //判断是否登录
+    changeLog(state,islog){
+      state.isLogin=islog
     }
   },
   getters: {
@@ -83,6 +89,8 @@ Vue.prototype.$axios = axios;
 
 //绑定全局的axios地址
 axios.defaults.baseURL = 'http://111.230.232.110:8899/';
+// 设置带上cookie
+axios.defaults.withCredentials = true; //让ajax携带cookie
 
 
 // 下载 VueRouter 
@@ -117,7 +125,7 @@ let routes = [{
 }, {
   path: '/order',
   component: order
-},{
+}, {
   path: '/login',
   component: login
 }]
@@ -129,15 +137,25 @@ let router = new VueRouter({
 })
 // 导航守卫
 router.beforeEach((to, from, next) => {
+  // console.log(to);
+  // if (to.path == '/detail/:artID') {
+  //   // 　window.scrollTo(0,0)
+  //   console.log('1231231');
 
+  // } else {
+  //   next()
+  // }
 
   if (to.path == '/order') {
+
     axios.get("site/account/islogin").then(result => {
       // console.log(result);
       if (result.data.code == 'nologin') {
         Vue.prototype.$Message.warning("请先登录");
 
         router.push('/login')
+      } else {
+        next()
       }
     })
 
@@ -159,5 +177,18 @@ Vue.filter('shortTime', (value) => {
 new Vue({
   render: h => h(App),
   router,
-  store
+  store,
+  created() {
+    //判断一次是否登录
+    axios.get("site/account/islogin").then(result => {
+      // console.log(result);
+      if (result.data.code == 'nologin') {
+        // Vue.prototype.$Message.warning("请先登录");
+
+        // router.push('/login')
+      } else {
+        store.state.isLogin =true
+      }
+    })
+  },
 }).$mount('#app')
