@@ -27,7 +27,7 @@ const store = new Vuex.Store({
       // 90: 12,
     },
     // 存储是否登录
-    isLogin :false
+    isLogin: false
   },
   mutations: {
     addTOCart(state, obj) {
@@ -61,8 +61,8 @@ const store = new Vuex.Store({
 
     },
     //判断是否登录
-    changeLog(state,islog){
-      state.isLogin=islog
+    changeLog(state, islog) {
+      state.isLogin = islog
     }
   },
   getters: {
@@ -123,7 +123,7 @@ let routes = [{
   path: '/shopcar',
   component: shopcar
 }, {
-  path: '/order',
+  path: '/order/:ids',
   component: order
 }, {
   path: '/login',
@@ -138,15 +138,9 @@ let router = new VueRouter({
 // 导航守卫
 router.beforeEach((to, from, next) => {
   // console.log(to);
-  // if (to.path == '/detail/:artID') {
-  //   // 　window.scrollTo(0,0)
-  //   console.log('1231231');
+  window.scrollTo(0,0);
 
-  // } else {
-  //   next()
-  // }
-
-  if (to.path == '/order') {
+  if (to.path.indexOf('/order') != -1) {
 
     axios.get("site/account/islogin").then(result => {
       // console.log(result);
@@ -187,7 +181,7 @@ new Vue({
 
         // router.push('/login')
       } else {
-        store.state.isLogin =true
+        store.state.isLogin = true
       }
     })
   },

@@ -105,7 +105,7 @@
                     <div class="cart-foot clearfix">
                         <div class="right-box">
                             <button class="button" onclick="javascript:location.href='/index.html';">继续购物</button>
-                            <router-link to="/order">
+                            <router-link :to="`/order/`+selectId">
                                 <button class="submit" >立即结算</button>
                             </router-link>
                         </div>
@@ -203,6 +203,18 @@ export default {
         }
       });
       return price;
+    },
+    //弄传到订单页的id
+    selectId(){
+        let ids = "";
+        this.goodsList.forEach(val=>{
+            if (val.isSelected == true) {
+                ids += val.id 
+                ids += ','
+            }
+        })
+        ids=ids.slice(0,ids.length-1)
+        return ids
     }
   },
   //使用watch 观察数据的改变
