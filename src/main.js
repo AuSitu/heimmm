@@ -104,6 +104,9 @@ import detail from './components/02detail.vue'
 import shopcar from './components/03shopcar.vue'
 import order from './components/04order.vue'
 import login from './components/05login.vue'
+import pay from './components/06pay.vue'
+import paysuccess from './components/07paysuccess.vue'
+import vipCenter from './components/08vipCenter.vue'
 
 
 Vue.config.productionTip = false
@@ -121,13 +124,40 @@ let routes = [{
   component: detail
 }, {
   path: '/shopcar',
-  component: shopcar
+  component: shopcar,
 }, {
   path: '/order/:ids',
-  component: order
+  component: order,
+  // 运用路由员信息
+  meta: {
+    checkLogin: true
+  }
 }, {
   path: '/login',
   component: login
+}, {
+  path: '/pay/:orderid',
+  component: pay,
+  // 运用路由员信息
+  meta: {
+    checkLogin: true
+  }
+},{
+  path: '/paysuccess',
+  name:'paysuccess',
+  component: paysuccess,
+  // 运用路由员信息
+  meta: {
+    checkLogin: true
+  }
+},{
+  path: '/vipCenter',
+  name:'vipCenter',
+  component: vipCenter,
+  // 运用路由员信息
+  meta: {
+    checkLogin: true
+  }
 }]
 
 
@@ -138,9 +168,9 @@ let router = new VueRouter({
 // 导航守卫
 router.beforeEach((to, from, next) => {
   // console.log(to);
-  window.scrollTo(0,0);
+  window.scrollTo(0, 0);
 
-  if (to.path.indexOf('/order') != -1) {
+  if (to.meta.checkLogin == true) {
 
     axios.get("site/account/islogin").then(result => {
       // console.log(result);
