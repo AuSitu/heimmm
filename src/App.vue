@@ -17,7 +17,8 @@
                         <strong>|</strong>
                     </span>
                     <span v-show="$store.state.isLogin==true">
-                        <a href="" class="">会员中心</a>
+                        <router-link :to="{name: 'vipCenter'}">会员中心</router-link>
+                        <!-- <a href="" class="">会员中心</a> -->
                         <strong>|</strong>
                         <a @click="logout">退出</a>
                         <strong>|</strong>

@@ -58,7 +58,13 @@ const store = new Vuex.Store({
     updateCarData(state, obj) {
       // console.log(obj);
       state.cartData = obj
+    },
+    // 删除某一条数据的方法
+    delGoodsById(state, id) {
+      // 必须使用Vue.delete才可以同步更新视图
+      // console.log(id);
 
+      Vue.delete(state.cartData, id)
     },
     //判断是否登录
     changeLog(state, islog) {
@@ -142,17 +148,17 @@ let routes = [{
   meta: {
     checkLogin: true
   }
-},{
+}, {
   path: '/paysuccess',
-  name:'paysuccess',
+  name: 'paysuccess',
   component: paysuccess,
   // 运用路由员信息
   meta: {
     checkLogin: true
   }
-},{
+}, {
   path: '/vipCenter',
-  name:'vipCenter',
+  name: 'vipCenter',
   component: vipCenter,
   // 运用路由员信息
   meta: {
@@ -163,6 +169,8 @@ let routes = [{
 
 // 实例化VueRouter
 let router = new VueRouter({
+  // 使用h5的history模式 让url更加美观
+  mode: 'history',
   routes
 })
 // 导航守卫

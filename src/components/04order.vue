@@ -372,6 +372,10 @@ export default {
               this.$Message.success("订单提交成功");
               // 跳转路由
               this.$router.push("/pay/"+result.data.message.orderid);
+              // 提交订单后要删除掉订单页的数据
+              this.goodsList.forEach(v=>{
+                  this.$store.commit('delGoodsById',v.id)
+              })
             });
           } else {
               this.$Message.warning("数据不完整,请检查");
@@ -388,7 +392,7 @@ export default {
     this.$axios
       .get(`site/validate/order/getgoodslist/${this.ids}`)
       .then(res => {
-        // console.log(res);
+        console.log(res);
         this.goodsList = res.data.message;
         // 把购买数增加到数组
         res.data.message.forEach(element => {
