@@ -113,6 +113,7 @@ import login from './components/05login.vue'
 import pay from './components/06pay.vue'
 import paysuccess from './components/07paysuccess.vue'
 import vipCenter from './components/08vipCenter.vue'
+import tradeCenter from './components/09tradeCenter.vue'
 
 
 Vue.config.productionTip = false
@@ -133,6 +134,7 @@ let routes = [{
   component: shopcar,
 }, {
   path: '/order/:ids',
+  name: 'order',
   component: order,
   // 运用路由员信息
   meta: {
@@ -163,8 +165,17 @@ let routes = [{
   // 运用路由员信息
   meta: {
     checkLogin: true
-  }
-}]
+  },
+  children: [{
+    path: '/tradeCenter',
+    name: 'tradeCenter',
+    component: tradeCenter,
+    // 运用路由员信息
+    meta: {
+      checkLogin: true
+    }
+  }, ]
+}, ]
 
 
 // 实例化VueRouter

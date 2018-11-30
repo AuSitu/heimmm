@@ -16,7 +16,7 @@
                 <div class="avatar-box">
                   <a href="/user/center/avatar.html" class="img-box">
                     <!-- <i class="iconfont icon-user-full"></i> -->
-                    <img src="../assets/timg.gif" alt="">
+                    <img src="../assets/timg.gif" alt>
                   </a>
                   <h3>ivanyb</h3>
                   <p>
@@ -33,7 +33,8 @@
                       <div class="list">
                         <p>
                           <a href="#/site/member/orderlist" class>
-                            <i class="iconfont icon-arrow-right"></i>交易订单
+                            <!-- <i class="iconfont icon-arrow-right"></i>交易订单 -->
+                            <router-link to="/tradeCenter">交易订单</router-link>
                           </a>
                         </p>
                       </div>
@@ -70,7 +71,9 @@
                 </div>
               </div>
             </div>
+            <router-view></router-view>
             <div class="right-auto">
+              <!-- 交易订单的内容 -->
               <div class="bg-wrap" style="min-height: 765px;">
                 <div class="sub-tit">
                   <ul>
@@ -82,14 +85,14 @@
                 <div class="center-head clearfix">
                   <div class="img-box">
                     <!-- <i class="iconfont icon-user-full"></i> -->
-                         <img src="../assets/timg.gif" alt="">
+                    <img src="../assets/timg.gif" alt>
                   </div>
                   <div class="list-box">
                     <h3>欢迎您~ ivanyb</h3>
                     <ul>
-                      <li>组别：注册会员</li>
-                      <li>手机：13987654321</li>
-                      <li>Email:ivanyb1@qq.com</li>
+                      <li>组别：VIP会员</li>
+                      <li>手机：132XXX88888</li>
+                      <li>Email:888@qq.com</li>
                     </ul>
                   </div>
                 </div>
@@ -120,16 +123,20 @@
 
 <script>
 export default {
-   name: "vipCenter"
+  name: "vipCenter",
+  data: function() {
+    return {};
+  },
+  methods: {}
 };
 </script>
 
 <style>
-.sub-tit{
-    padding-top: 0;
+.sub-tit {
+  padding-top: 0;
 }
-.avatar-box{
-    height: auto;
+.avatar-box {
+  height: auto;
 }
 </style>
 

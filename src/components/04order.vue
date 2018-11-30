@@ -386,13 +386,15 @@ export default {
 
   },
   created() {
-    //    console.log(this.$route);
+       console.log(this.$route);
     this.ids = this.$route.params.ids;
 
     this.$axios
       .get(`site/validate/order/getgoodslist/${this.ids}`)
       .then(res => {
-        console.log(res);
+        // console.log(res);
+       
+        
         this.goodsList = res.data.message;
         // 把购买数增加到数组
         res.data.message.forEach(element => {
