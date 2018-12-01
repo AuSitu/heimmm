@@ -324,7 +324,7 @@ export default {
   watch: {
     "$route.path"(newVal, oldVal) {
       // $route(newVal, oldVal) {
-      // console.log(newVal+'---'+oldVal);
+      console.log(newVal+'---'+oldVal);
       //   console.log("数据变了");
       // 设置 图片数组为空 让放大镜组件 重新生成
       this.images.normal_size = [];

@@ -113,7 +113,9 @@ import login from './components/05login.vue'
 import pay from './components/06pay.vue'
 import paysuccess from './components/07paysuccess.vue'
 import vipCenter from './components/08vipCenter.vue'
-import tradeCenter from './components/09tradeCenter.vue'
+import personalCenter from './components/09personalCenter.vue'
+import tradeCenter from './components/10tradeCenter.2.vue'
+import tradeDetails from './components/11tradeDetails.vue'
 
 
 Vue.config.productionTip = false
@@ -145,6 +147,7 @@ let routes = [{
   component: login
 }, {
   path: '/pay/:orderid',
+  name: 'pay',
   component: pay,
   // 运用路由员信息
   meta: {
@@ -164,15 +167,39 @@ let routes = [{
   component: vipCenter,
   // 运用路由员信息
   meta: {
-    checkLogin: true
+    checkLogin: true,
+    currentName:'中心首页'
   },
   children: [{
-    path: '/tradeCenter',
+    path: '',
+    redirect: 'personalCenter',
+    
+  }, {
+    path: 'personalCenter',
+    // name: 'personalCenter',
+    component: personalCenter,
+    // 运用路由员信息
+    meta: {
+      checkLogin: true,
+      currentName:'中心首页'
+    }
+  }, {
+    path: 'tradeCenter',
     name: 'tradeCenter',
     component: tradeCenter,
     // 运用路由员信息
     meta: {
-      checkLogin: true
+      checkLogin: true,
+      currentName:'交易列表'
+    }
+  }, {
+    path: 'tradeDetails/:orderid',
+    name: 'tradeDetails',
+    component: tradeDetails,
+    // 运用路由员信息
+    meta: {
+      checkLogin: true,
+      currentName:'交易详情'
     }
   }, ]
 }, ]
@@ -180,14 +207,22 @@ let routes = [{
 
 // 实例化VueRouter
 let router = new VueRouter({
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    // return 期望滚动到哪个的位置
+    // return 期望滚动到哪个的位置
+    return {
+      x: 0,
+      y: 0
+    }
+  },
   // 使用h5的history模式 让url更加美观
   mode: 'history',
-  routes
-})
+});
 // 导航守卫
 router.beforeEach((to, from, next) => {
   // console.log(to);
-  window.scrollTo(0, 0);
+  // window.scrollTo(0, 0);
 
   if (to.meta.checkLogin == true) {
 
@@ -208,6 +243,15 @@ router.beforeEach((to, from, next) => {
   }
 
 })
+// // 路由跳转完毕触发
+// 这种方法 是使用导航守卫的 回调函数实现 
+// router.afterEach((to, from) => {
+//   // console.log(to);
+//   // console.log(from);
+//   // 页面滚到顶部即可
+//   window.scrollTo(0, 0);
+
+// })
 // 导入 moment.js
 import moment from "moment";
 //全局过滤器
@@ -217,11 +261,14 @@ Vue.filter('shortTime', (value) => {
 })
 
 
+
 new Vue({
   render: h => h(App),
   router,
   store,
   created() {
+
+
     //判断一次是否登录
     axios.get("site/account/islogin").then(result => {
       // console.log(result);
@@ -234,4 +281,10 @@ new Vue({
       }
     })
   },
+  // watch: {
+  //   "$route.path"(newVal, oldVal) {
+  //     console.log(newVal+'---'+oldVal);
+
+  //   }
+  // },
 }).$mount('#app')

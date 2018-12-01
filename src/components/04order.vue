@@ -275,7 +275,7 @@ export default {
       //表单
       ruleForm: {
         // 收货人姓名
-        accept_name: "小明",
+        accept_name: "龘龘龘靐齉齾爩鱻麤龗",
         // 收货人地址
         address: "这里这里这",
         // 收货人手机号

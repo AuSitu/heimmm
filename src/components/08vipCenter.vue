@@ -7,7 +7,8 @@
             <div class="location">
               <span>当前位置：</span>
               <a href="/index.html">首页</a> &gt;
-              <a href="/user/center/index.html">会员中心</a>
+              <a href="/user/center/index.html">会员中心</a>&gt;
+              <a href="/user/center/index.html">{{currentName}}</a>
             </div>
           </div>
           <div class="section clearfix">
@@ -32,10 +33,13 @@
                       </h2>
                       <div class="list">
                         <p>
-                          <a href="#/site/member/orderlist" class>
-                            <!-- <i class="iconfont icon-arrow-right"></i>交易订单 -->
-                            <router-link to="/tradeCenter">交易订单</router-link>
-                          </a>
+                          <!-- <a href="#/site/member/orderlist" class> -->
+                          <!-- <i class="iconfont icon-arrow-right"></i>交易订单 -->
+                          <router-link to="/vipCenter/tradeCenter">
+                            <i class="iconfont icon-arrow-right"></i>
+                            交易订单
+                          </router-link>
+                          <!-- </a> -->
                         </p>
                       </div>
                     </li>
@@ -61,7 +65,7 @@
                           </a>
                         </p>
                         <p>
-                          <a href="javascript:void(0)">
+                          <a @click="logout" href="javascript:void(0)">
                             <i class="iconfont icon-arrow-right"></i>退出登录
                           </a>
                         </p>
@@ -72,47 +76,6 @@
               </div>
             </div>
             <router-view></router-view>
-            <div class="right-auto">
-              <!-- 交易订单的内容 -->
-              <div class="bg-wrap" style="min-height: 765px;">
-                <div class="sub-tit">
-                  <ul>
-                    <li class="selected">
-                      <a href="javascript:;">个人中心</a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="center-head clearfix">
-                  <div class="img-box">
-                    <!-- <i class="iconfont icon-user-full"></i> -->
-                    <img src="../assets/timg.gif" alt>
-                  </div>
-                  <div class="list-box">
-                    <h3>欢迎您~ ivanyb</h3>
-                    <ul>
-                      <li>组别：VIP会员</li>
-                      <li>手机：132XXX88888</li>
-                      <li>Email:888@qq.com</li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="center-info clearfix"></div>
-                <div class="center-tit">
-                  <span>
-                    <a href="/user/order-list.html">更多..</a>
-                  </span>
-                  <h3>
-                    <i class="iconfont icon-order"></i>我的订单
-                  </h3>
-                </div>
-                <div class="center-info clearfix">
-                  <ul>
-                    <li>已完成订单：0个</li>
-                    <li>待完成订单：2个</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -125,9 +88,48 @@
 export default {
   name: "vipCenter",
   data: function() {
-    return {};
+    return {
+       currentName: ""
+    };
   },
-  methods: {}
+  methods: {
+    logout() {
+      this.$confirm("请问确定要退出吗?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.$axios.get(`site/account/logout`).then(res => {
+            //   console.log(res);
+            if (res.data.status === 0) {
+              this.$Message.success(res.data.message);
+              this.$router.push("/index");
+              //修改vuex的登录的字段
+              this.$store.commit("changeLog", false);
+            }
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "请继续购物"
+          });
+        });
+    }
+  },
+  // 使用侦听器
+  watch: {
+    $route(val, oldVal) {
+      console.log(val);
+      this.currentName = this.$route.meta.currentName;
+    }
+  },
+  created(){
+    // console.log(this.$route);
+    // console.log(this.$route.meta.currentName);
+     this.currentName = this.$route.meta.currentName;
+  }
 };
 </script>
 

@@ -119,9 +119,9 @@
               <button class="button" onclick="javascript:location.href='/index.html';">继续购物</button>
               <!-- <router-link :to="`/order/`+selectId"> -->
               <!-- <router-link :to="{name:'order',query :{ids:selectId}}"> -->
-              <router-link :to="{name:'order',params:{ids:selectId}}">
-                <button class="submit">立即结算</button>
-              </router-link>
+              <!-- <router-link :to="{name:'order',params:{ids:selectId}}"> -->
+                <button class="submit"  @click="toOrder">立即结算</button>
+              <!-- </router-link> -->
             </div>
           </div>
           <!--购物车底部-->
@@ -174,6 +174,18 @@ export default {
             message: "已取消删除"
           });
         });
+    },
+    //当列表没有商品不可以去结算页面
+    toOrder(){
+        // 如果没有选中商品 无法跳转
+        if(this.selectedPrice==0){
+            // 提示用户
+            this.$message.warning('哥们,没东西咋提交呀!买点呗 (* ￣3)(ε￣ *)');
+        }else{
+            // 编程式导航
+            // this.$router.push('/order/'+this.selectedIds)
+            this.$router.push({name:'order',params:{ids:this.selectId}})
+        }
     }
   },
   created() {
